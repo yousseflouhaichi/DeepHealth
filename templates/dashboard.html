@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block extra_css %}
+    <style xmlns="http://www.w3.org/1999/html">
+    </style>
+{% endblock %}
+{% block title %} Predict {% endblock title %}
+
+{% block content %}
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h3 class="page-title">Pneumonia check</h3>
+
+            </div>
+        </div>
+    </div>
+
+        <div class="row">
+            <div class="col-md-13">
+                                            <!-- Tabs -->
+                <div class="card">
+                    <!-- Nav tabs -->
+{#                    <ul class="nav nav-tabs" role="tablist">#}
+{#                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home" role="tab"><span#}
+{#                                class="hidden-sm-up"></span> <span class="hidden-xs-down">Railroad</span></a></li>#}
+{#                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#profile" role="tab"><span#}
+{#                                class="hidden-sm-up"></span> <span class="hidden-xs-down">Surface</span></a></li>#}
+{#                    </ul>#}
+                    <!-- Tab panes -->
+                    <div class="tab-content tabcontent-border">
+                        <div class="tab-pane active" id="home" role="tabpanel">
+                            <div class="p-20">
+
+                                <form method="post" enctype="multipart/form-data" action="" class="form-horizontal" >
+                                    {% csrf_token %}
+                                    <div class="card-body">
+                                        <h4 class="card-title">Upload chest X-ray image to get diagnosis</h4>
+                                        <br>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 text-right control-label col-form-label">Upload</label>
+                                        <div class="col-md-9">
+                                            <div class="custom-file">
+                                                <input name="filePath" type="file" class="custom-file-input" required>
+                                                <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                                                <div class="invalid-feedback">Example invalid custom file feedback</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    </div>
+                                    <div class="border-top">
+                                        <div class="card-body">
+                                            <div class="p-t-20" style="display: flex; align-items: center; justify-content: center;">
+                                            <button type="submit" style="width:30%;" value="Submit" class="btn btn-primary2">CHECK</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+                        <div class="tab-pane  p-20" id="profile" role="tabpanel">
+                            <div class="p-20">
+                                <form method="post" action="" class="form-horizontal" id="predict">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="surface" value="surface">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Predict percentage of validation surface</h4>
+                                        <br>
+                                        <div class="form-group row">
+                                            <label for="cono1" class="col-sm-2 text-right control-label col-form-label">Time</label>
+                                            <div class="col-sm-9">
+                                                <input type="time" class="form-control" id="cono1" name="tranchh" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="cono1" class="col-sm-2 text-right control-label col-form-label">Day category</label>
+                                            <div class="col-sm-9">
+                                                <select name="catday" id="pet-select"  class="select2 form-control custom-select " required>
+                                                    <option value="">--Choose day category--</option>
+                                                    <option value="DIJFP">DIJFP</option>
+                                                    <option value="JOHV">JOHV</option>
+                                                    <option value="JOVS">JOVS</option>
+                                                    <option value="SAHV">SAHV</option>
+                                                    <option value="SAVS">SAVS</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="border-top">
+                                        <div class="card-body">
+                                            <div class="p-t-20" style="display: flex; align-items: center; justify-content: center;">
+                                                <button type="submit" name="predict" style="width:30%;" value="surface" class="btn btn-primary2">Predict</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+                </div>
+
+                <div class="card">
+                {% if request.POST %}
+
+                    <div class="card-body border-top">
+                        <h4 class="card-title">Prediction Results</h4>
+                        <hr>
+                        <div  class="alert alert-success-blue" role="alert">
+
+
+                            <div class="row" style="padding: 10px 10px 10px 10px; justify-content: start; align-items: center;" >
+                              <div class="column" style="padding-right: 5%" ><img style="height: 200px; width: 200px; object-fit:contain; " src={{filePathName}} alt="imagename" ><p>{{ fileName }}</p></div>
+                              <div class="column">
+                                    <h2 class="alert-heading"> {{ predictedLabel }} </h2>
+
+                                    <p>{{ message }}</p>
+                              </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+           <script>
+            //***********************************//
+            // For select 2
+            //***********************************//
+            $(".select2").select2();
+
+            /*colorpicker*/
+            $('.demo').each(function () {
+                //
+                // Dear reader, it's actually very easy to initialize MiniColors. For example:
+                //
+                //  $(selector).minicolors();
+                //
+                // The way I've done it below is just for the demo, so don't get confused
+                // by it. Also, data- attributes aren't supported at this time...they're
+                // only used for this demo.
+                //
+                $(this).minicolors({
+                    control: $(this).attr('data-control') || 'hue',
+                    position: $(this).attr('data-position') || 'bottom left',
+
+                    change: function (value, opacity) {
+                        if (!value) return;
+                        if (opacity) value += ', ' + opacity;
+                        if (typeof console === 'object') {
+                            console.log(value);
+                        }
+                    },
+                    theme: 'bootstrap'
+                });
+
+            });
+            /*datwpicker*/
+            jQuery('.mydatepicker').datepicker();
+            jQuery('#datepicker-autoclose').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            var quill = new Quill('#editor', {
+                theme: 'snow'
+            });
+        </script>
+{% endblock %}

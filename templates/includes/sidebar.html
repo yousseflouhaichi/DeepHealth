@@ -1,0 +1,20 @@
+{% load static %}
+
+  <aside class="left-sidebar scrollable ps-container ps-theme-default ps-active-y" data-sidebarbg="skin5">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav" class="p-t-30">
+                        <li class="sidebar-item"><a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'dashboard' %}" aria-expanded="false"><i class="fas fa-diagnoses"></i><span class="hide-menu"> Predict </span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'history' %}" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu">History</span></a></li>
+{#                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'surface' %}" aria-expanded="false"><i class="mdi mdi-road"></i><span class="hide-menu">Surface</span></a></li>#}
+{#                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'railroad' %}" aria-expanded="false"><i class="mdi mdi-road-variant"></i><span class="hide-menu">Railroad</span></a></li>#}
+{#                        {% if not request.user.is_staff  %}#}
+{#                        {% endif %}#}
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
